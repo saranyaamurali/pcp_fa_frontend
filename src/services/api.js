@@ -1,10 +1,15 @@
 import axios from "axios";
 
-console.log("Vite API URL:", import.meta.env.VITE_API_URL);
+console.log("Vite API URL (raw):", import.meta.env.VITE_API_URL);
+
+let baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+if (baseURL && !baseURL.endsWith("/api") && !baseURL.endsWith("/api/")) {
+  baseURL = baseURL.endsWith("/") ? `${baseURL}api` : `${baseURL}/api`;
+}
+console.log("Vite API URL (resolved):", baseURL);
 
 const API = axios.create({
-  baseURL:
-    import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+  baseURL,
 });
 
 // Add interceptor to include token in headers
