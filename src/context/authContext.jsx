@@ -5,7 +5,7 @@ import {
 } from "react";
 
 import { authReducer }
-from "./authReducer.js";
+from "./authReducer";
 
 const AuthContext =
   createContext();
