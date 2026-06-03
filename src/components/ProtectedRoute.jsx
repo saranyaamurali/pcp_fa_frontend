@@ -11,9 +11,17 @@ function ProtectedRoute({
     isAuthenticated,
   } = useAuth();
 
-  return isAuthenticated
-    ? children
-    : <Navigate to="/login" />;
+  if (
+    !isAuthenticated
+  ) {
+    return (
+      <Navigate
+        to="/login"
+      />
+    );
+  }
+
+  return children;
 }
 
 export default ProtectedRoute;

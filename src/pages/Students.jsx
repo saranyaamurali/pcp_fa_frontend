@@ -1,83 +1,110 @@
-import {
-  useEffect,
-  useState,
-} from "react";
-
+import { useEffect, useState } from "react";
 import API from "../services/api";
+import Navbar from "../components/Navbar";
 
 function Students() {
-  const [students,
-    setStudents] =
-    useState([]);
-
-  const fetchStudents =
-    async () => {
-      try {
-        const res =
-          await API.get(
-            "/students"
-          );
-
-        setStudents(
-          res.data.data
-        );
-      } catch (
-        error
-      ) {
-        console.log(
-          error
-        );
-      }
-    };
+  const [students, setStudents] = useState([]);
+  const [search, setSearch] = useState("");
+  const [department, setDepartment] = useState("");
 
   useEffect(() => {
     fetchStudents();
   }, []);
 
+  const fetchStudents = async () => {
+    const res = await API.get("/students");
+    setStudents(res.data.data);
+  };
+
+  const filteredStudents = students.filter(
+    (student) =>
+      student.name
+        .toLowerCase()
+        .includes(search.toLowerCase()) &&
+      (department === "" ||
+        student.department === department)
+  );
+
   return (
     <div>
-      <h1>
-        Students
-      </h1>
+      <Navbar />
 
-      {students.map(
-        (
-          student
-        ) => (
-          <div
-            key={
-              student._id
-            }
-            style={{
-              border:
-                "1px solid black",
-              margin:
-                "10px",
-              padding:
-                "10px",
-            }}
-          >
-            <h3>
-              {
-                student.name
-              }
-            </h3>
+      <h1>Students</h1>
 
-            <p>
-              {
-                student.department
-              }
-            </p>
+      <input
+        data-testid="student-search"
+        placeholder="Search Student"
+        value={search}
+        onChange={(e) =>
+          setSearch(e.target.value)
+        }
+      />
 
-            <p>
-              CGPA:
-              {
-                student.cgpa
-              }
-            </p>
-          </div>
-        )
-      )}
+      <select
+        data-testid="student-filter"
+        value={department}
+        onChange={(e) =>
+          setDepartment(e.target.value)
+        }
+      >
+        <option value="">
+          All Departments
+        </option>
+
+        <option value="CSE">
+          CSE
+        </option>
+
+        <option value="IT">
+          IT
+        </option>
+
+        <option value="ECE">
+          ECE
+        </option>
+
+        <option value="MECH">
+          MECH
+        </option>
+      </select>
+
+      <table
+        border="1"
+        data-testid="student-table"
+      >
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>CGPA</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {filteredStudents.map(
+            (student) => (
+              <tr
+                key={student._id}
+                data-testid="student-row"
+              >
+                <td>
+                  {student.name}
+                </td>
+
+                <td>
+                  {
+                    student.department
+                  }
+                </td>
+
+                <td>
+                  {student.cgpa}
+                </td>
+              </tr>
+            )
+          )}
+        </tbody>
+      </table>
     </div>
   );
 }

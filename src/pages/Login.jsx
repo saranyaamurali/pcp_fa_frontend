@@ -35,11 +35,6 @@ function Login() {
           res.data.token
         );
 
-        localStorage.setItem(
-          "token",
-          res.data.token
-        );
-
         navigate(
           "/dashboard"
         );
@@ -59,11 +54,11 @@ function Login() {
       <h1>Login</h1>
 
       <form
-        onSubmit={
-          handleSubmit
-        }
+        data-testid="login-form"
+        onSubmit={handleSubmit}
       >
         <input
+          data-testid="email-input"
           type="email"
           placeholder="Email"
           value={email}
@@ -78,6 +73,7 @@ function Login() {
         <br />
 
         <input
+          data-testid="password-input"
           type="password"
           placeholder="Password"
           value={password}
@@ -92,6 +88,7 @@ function Login() {
         <br />
 
         <button
+          data-testid="login-btn"
           type="submit"
         >
           Login
