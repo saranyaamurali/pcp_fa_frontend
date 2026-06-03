@@ -1,21 +1,14 @@
-import { useState }
-from "react";
-
-import { useNavigate }
-from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 import API from "../services/api";
-
-import { useAuth }
-from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
-  const [username,
-    setUsername] =
+  const [email, setEmail] =
     useState("");
 
-  const [password,
-    setPassword] =
+  const [password, setPassword] =
     useState("");
 
   const { login } =
@@ -33,12 +26,17 @@ function Login() {
           await API.post(
             "/auth/login",
             {
-              username,
+              email,
               password,
             }
           );
 
         login(
+          res.data.token
+        );
+
+        localStorage.setItem(
+          "token",
           res.data.token
         );
 
@@ -49,7 +47,9 @@ function Login() {
         error
       ) {
         alert(
-          "Login Failed"
+          error.response?.data
+            ?.message ||
+            "Login Failed"
         );
       }
     };
@@ -64,10 +64,11 @@ function Login() {
         }
       >
         <input
-          placeholder="Username"
-          value={username}
+          type="email"
+          placeholder="Email"
+          value={email}
           onChange={(e) =>
-            setUsername(
+            setEmail(
               e.target.value
             )
           }
@@ -96,6 +97,12 @@ function Login() {
           Login
         </button>
       </form>
+
+      <br />
+
+      <Link to="/register">
+        Register
+      </Link>
     </div>
   );
 }
