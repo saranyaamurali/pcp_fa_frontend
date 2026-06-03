@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavBar";
 
 function Students() {
   const [students, setStudents] = useState([]);

@@ -4,7 +4,7 @@ import {
 } from "react";
 
 import API from "../services/api";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavBar";
 
 function Companies() {
   const [companies,
