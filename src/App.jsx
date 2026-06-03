@@ -9,11 +9,16 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Students from "./pages/Students";
+import StudentDetail from "./pages/StudentDetail";
 
 import Companies from "./pages/Companies";
+import CompanyDetail from "./pages/CompanyDetail";
 import Drives from "./pages/Drives";
+import DriveDetail from "./pages/DriveDetail";
 import Applications from "./pages/Applications";
+import ApplicationDetail from "./pages/ApplicationDetail";
 import Interviews from "./pages/Interviews";
+import Analytics from "./pages/Analytics";
 import Profile from "./pages/Profile";
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -51,10 +56,28 @@ function App() {
         />
 
         <Route
+          path="/students/:id"
+          element={
+            <ProtectedRoute>
+              <StudentDetail />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/companies"
           element={
             <ProtectedRoute>
               <Companies />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/companies/:id"
+          element={
+            <ProtectedRoute>
+              <CompanyDetail />
             </ProtectedRoute>
           }
         />
@@ -69,10 +92,28 @@ function App() {
         />
 
         <Route
+          path="/drives/:id"
+          element={
+            <ProtectedRoute>
+              <DriveDetail />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/applications"
           element={
             <ProtectedRoute>
               <Applications />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/applications/:id"
+          element={
+            <ProtectedRoute>
+              <ApplicationDetail />
             </ProtectedRoute>
           }
         />
@@ -87,6 +128,15 @@ function App() {
         />
 
         <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute>
+              <Analytics />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/profile"
           element={
             <ProtectedRoute>
@@ -96,14 +146,14 @@ function App() {
         />
 
         <Route
-  path="/"
-  element={<Navigate to="/login" />}
-/>
+          path="/"
+          element={<Navigate to="/login" />}
+        />
 
-<Route
-  path="*"
-  element={<Navigate to="/login" />}
-/>
+        <Route
+          path="*"
+          element={<Navigate to="/login" />}
+        />
       </Routes>
     </BrowserRouter>
   );

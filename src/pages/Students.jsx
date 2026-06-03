@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import Navbar from "../components/NavBar";
 
 function Students() {
+  const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [search, setSearch] = useState("");
   const [department, setDepartment] = useState("");
@@ -29,7 +31,7 @@ function Students() {
     <div>
       <Navbar />
 
-      <h1>Students</h1>
+      <h1 data-testid="students-heading">Students</h1>
 
       <input
         data-testid="student-search"
@@ -77,6 +79,7 @@ function Students() {
             <th>Name</th>
             <th>Department</th>
             <th>CGPA</th>
+            <th>Action</th>
           </tr>
         </thead>
 
@@ -87,18 +90,37 @@ function Students() {
                 key={student._id}
                 data-testid="student-row"
               >
-                <td>
+                <td
+                  data-testid={`student-name-${student._id}`}
+                >
                   {student.name}
                 </td>
 
-                <td>
+                <td
+                  data-testid={`student-dept-${student._id}`}
+                >
                   {
                     student.department
                   }
                 </td>
 
-                <td>
+                <td
+                  data-testid={`student-cgpa-${student._id}`}
+                >
                   {student.cgpa}
+                </td>
+
+                <td>
+                  <button
+                    data-testid={`view-student-btn-${student._id}`}
+                    onClick={() =>
+                      navigate(
+                        `/students/${student._id}`
+                      )
+                    }
+                  >
+                    View
+                  </button>
                 </td>
               </tr>
             )

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import API from "../services/api";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -27,8 +27,8 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await axios.post(
-        "https://pcp-fa-backend-hkdu.onrender.com/api/auth/register",
+      await API.post(
+        "/auth/register",
         formData
       );
 
@@ -48,12 +48,14 @@ const Register = () => {
 
   return (
     <div>
-      <h1>Register</h1>
+      <h1 data-testid="register-heading">Register</h1>
 
       <form
+        data-testid="register-form"
         onSubmit={handleSubmit}
       >
         <input
+          data-testid="register-name-input"
           type="text"
           name="name"
           placeholder="Name"
@@ -61,12 +63,14 @@ const Register = () => {
           onChange={
             handleChange
           }
+          required
         />
 
         <br />
         <br />
 
         <input
+          data-testid="register-email-input"
           type="email"
           name="email"
           placeholder="Email"
@@ -74,12 +78,14 @@ const Register = () => {
           onChange={
             handleChange
           }
+          required
         />
 
         <br />
         <br />
 
         <input
+          data-testid="register-password-input"
           type="password"
           name="password"
           placeholder="Password"
@@ -89,12 +95,14 @@ const Register = () => {
           onChange={
             handleChange
           }
+          required
         />
 
         <br />
         <br />
 
         <select
+          data-testid="register-role-select"
           name="role"
           value={formData.role}
           onChange={
@@ -113,15 +121,17 @@ const Register = () => {
         <br />
         <br />
 
-        <button type="submit">
+        <button
+          data-testid="register-btn"
+          type="submit"
+        >
           Register
         </button>
       </form>
 
       <br />
-
-      <Link to="/login">
-        Login
+      <Link to="/login" data-testid="login-link">
+        Already have an account? Login
       </Link>
     </div>
   );

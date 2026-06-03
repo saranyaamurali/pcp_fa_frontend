@@ -48,13 +48,28 @@ function Navbar() {
 
       {" | "}
 
-      <Link to="/interviews">
+      <Link
+        to="/interviews"
+        data-testid="interviews-link"
+      >
         Interviews
       </Link>
 
       {" | "}
 
-      <Link to="/profile">
+      <Link
+        to="/analytics"
+        data-testid="analytics-link"
+      >
+        Analytics
+      </Link>
+
+      {" | "}
+
+      <Link
+        to="/profile"
+        data-testid="profile-link"
+      >
         Profile
       </Link>
     </nav>
